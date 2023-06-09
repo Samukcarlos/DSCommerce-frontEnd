@@ -2,40 +2,28 @@ import './styles.css';
 import ButtonPrimary from "../../../components/ButtonInverse";
 import ButtonInverse from "../../../components/ButtonPrimary";
 import ProductDetailsCard from "../../../components/ProductDetailsCard";
-import { ProductDTO } from '../../../models/product';
+import * as productService from "../../../services/product-service"; 
+import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-const product: ProductDTO = {
-  id: 2,
-  name: "Smart TV",
-  description: "Esta TV é muito bela ",
-  imgUrl: "https://github.com/devsuperior/dscatalog-resources/blob/master/backend/img/2-big.jpg?raw=true",
-  price: 2500.99,
-  categories: [
-    {
-      id: 2,
-      name: "Eletrônicos"
-    },
-    {
-      id: 3,
-      name: "Computadores"
-    },
-    {
-      id: 4,
-      name: "Importados"
-    }
-
-
-  ]
-}
 export default function ProductDetails(){
-    return (
-            
+
+  const params = useParams();
+  const product = productService.findById(Number(params.productId));
+  
+  return (            
     <main>
       <section id="product-details-section" className="dsc-container">
-        <ProductDetailsCard product={product} />
+        {
+            product &&
+            <ProductDetailsCard product={product} />
+        }
+        
         <div className="dsc-btn-page-container">
             <ButtonPrimary text='Comprar' />
+            <Link to="/">
             <ButtonInverse text='Início' />
+            </Link>
         </div>
       </section>
     </main>
