@@ -8,20 +8,23 @@ import { Link } from 'react-router-dom';
 //const cart : OrderDTO = new OrderDTO();
 export default function Cart(){
 
-  const [cart, setCart] = useState<OrderDTO>(cartService.getCart());
-
-  /*useEffect(()=> {
+   /*useEffect(()=> {
     
     cart.items.push(item1);
     cart.items.push(item2);
     
   }) */
 
+  const [cart, setCart] = useState<OrderDTO>(cartService.getCart());
+
+  function hendleClearClick(){
+    cartService.clearCart();
+    setCart(cartService.getCart());
+  }
+
     return (
     <main>
       <section id="cart-container-section" className="dsc-container">
-       
-
        {
           cart.items.length === 0 
           ? (
@@ -54,17 +57,12 @@ export default function Cart(){
       </div> 
           ))
           }
-
-
       <div className="dsc-cart-total-container">
         <h3>R$ {cart.total.toFixed(2)}</h3>
       </div>
     </div>
           )
-       }
-       
-       
-       
+       }  
         <div className="dsc-btn-page-container">
             <div className="dsc-btn dsc-btn-blue">
               Finalizar pedido
@@ -74,6 +72,9 @@ export default function Cart(){
               Continuar comprando
             </div>
             </Link>
+            <div onClick={hendleClearClick} className="dsc-btn dsc-btn-white">
+              Limpar o Carrinho
+            </div>
         </div>
       </section>
     </main>
