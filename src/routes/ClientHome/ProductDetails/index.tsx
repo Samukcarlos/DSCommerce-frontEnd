@@ -2,11 +2,12 @@ import './styles.css';
 import ButtonPrimary from "../../../components/ButtonInverse";
 import ButtonInverse from "../../../components/ButtonPrimary";
 import ProductDetailsCard from "../../../components/ProductDetailsCard";
-import * as productService from '../../../services/product-service';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ProductDTO } from '../../../models/product';
+import * as productService from '../../../services/product-service';
+import * as cartService from '../../../services/cart-service';
 
 export default function ProductDetails(){
 
@@ -24,7 +25,16 @@ export default function ProductDetails(){
       .catch(() => {
           navigate("/");
       });
-   }, []);   
+   }, []); 
+   
+   function hendleBuyClick(){
+    if(product){
+      cartService.addProduct(product);
+      navigate("/cart");
+    }
+      
+   }
+
   return (            
     <main>
       <section id="product-details-section" className="dsc-container">
@@ -36,7 +46,9 @@ export default function ProductDetails(){
         }
         
         <div className="dsc-btn-page-container">
+          <div onClick={hendleBuyClick}>
             <ButtonPrimary text='Comprar' />
+          </div>
             <Link to="/">
             <ButtonInverse text='Início' />
             </Link>

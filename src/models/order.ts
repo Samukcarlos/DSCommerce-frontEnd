@@ -7,7 +7,8 @@ export class OrderDTO {
     sum += item.subTotal;
     })
     return sum;
-    }
+    }  
+    
     }
     export class OrderItemDTO {
     constructor(
