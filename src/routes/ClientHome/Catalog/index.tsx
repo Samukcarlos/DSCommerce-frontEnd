@@ -13,6 +13,8 @@ type QueryParams ={
 
 export default function Catalog(){
 
+  const [isLestPage, setIsLestPage]= useState(false);  // é a ultama página? caso seja botão carregar mais some
+
   const [products, setProduct]= useState<ProductDTO[]>([]);
 
   const [queryParams, setQueryParams]= useState<QueryParams>({
@@ -27,7 +29,9 @@ export default function Catalog(){
         .then(response => {
             const nextPage = response.data.content;
             setProduct(products.concat(nextPage)); //acrescentando itens na página com o carregar mais
-        });
+            setIsLestPage(response.data.last);
+          });
+  
   }, [queryParams]); // mudando o status/valor a função é executada (productService)
 
   function handleSearch(searchText: string){
@@ -51,9 +55,12 @@ export default function Catalog(){
              
           </div>
 
-          <div onClick={handleNextPageClick}>
-              <ButtonNextPage />
-          </div>
+              {
+                !isLestPage &&
+                <div onClick={handleNextPageClick}>
+                  <ButtonNextPage />
+                </div>
+              }
           
         </section>
       </main>
