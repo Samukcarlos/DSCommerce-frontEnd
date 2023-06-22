@@ -25,12 +25,18 @@ export default function Catalog(){
   useEffect(()=> {
         productService.findPageRequest(queryParams.page, queryParams.name)
         .then(response => {
-            setProduct(response.data.content)
+            const nextPage = response.data.content;
+            setProduct(products.concat(nextPage)); //acrescentando itens na página com o carregar mais
         });
   }, [queryParams]); // mudando o status/valor a função é executada (productService)
 
   function handleSearch(searchText: string){
-    setQueryParams({...queryParams, name: searchText});
+    setProduct([]);
+    setQueryParams({...queryParams,page:0, name: searchText});
+  }
+
+  function handleNextPageClick(){
+    setQueryParams({...queryParams, page:queryParams.page + 1}); // CARREGAR MAIS
   }
 
     return (      
@@ -44,7 +50,10 @@ export default function Catalog(){
               }
              
           </div>
-          <ButtonNextPage />
+
+          <div onClick={handleNextPageClick}>
+              <ButtonNextPage />
+          </div>
           
         </section>
       </main>
