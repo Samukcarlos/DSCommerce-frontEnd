@@ -31,5 +31,5 @@ export function loginRequest(loginData: CredentialsDTO){
     }
 
     export function getAccessToken(){
-        accessTokenRepository.get();
+       return accessTokenRepository.get();
     }
