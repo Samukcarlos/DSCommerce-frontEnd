@@ -26,7 +26,6 @@ export default function Catalog(){
   //const [productName, setProductName] = useState("");
 
   useEffect(()=> {
-      console.log("AUTENTICADO", isAuthenticated());
         productService.findPageRequest(queryParams.page, queryParams.name)
         .then(response => {
             const nextPage = response.data.content;
