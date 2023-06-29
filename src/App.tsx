@@ -8,6 +8,8 @@ import { ContexCartCount } from './utils/context-cart';
 import Login from './routes/ClientHome/Login';
 import Admin from './routes/Admin';
 import AdminHome from './routes/Admin/AdminHome';
+import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
+import {history} from './utils/history';
 
 
 export default function App() {
@@ -16,7 +18,7 @@ export default function App() {
 
  return (
   <ContexCartCount.Provider value={{contexCartCount, setContexCartCount}}>
-    <BrowserRouter>
+    <HistoryRouter history={history}>
       <Routes>
           <Route path="/" element={<ClientHome />}> 
             <Route index element={<Catalog />} /> 
@@ -30,7 +32,7 @@ export default function App() {
           </Route>
       <Route path= "*" element={<Navigate to="/" />} />   
     </Routes>
-   </BrowserRouter>
+   </HistoryRouter>
   </ContexCartCount.Provider>
  );
 }
