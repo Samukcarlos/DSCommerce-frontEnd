@@ -1,6 +1,7 @@
 import './styles.css';
 import homeIcon from '../../assets/home.svg';
 import productsIcon from '../../assets/products.svg';
+import LoggerUser from '../LoggedUser';
 
 export default function HearderAdmin(){
     return(
@@ -18,10 +19,9 @@ export default function HearderAdmin(){
               <p className="dsc-menu-item-active">Produtos</p>
             </div>
           </div>
+        </div>
           <div className="dsc-logged-user">
-            <p>Maria Silva</p>
-            <a href="#">Sair</a>
-          </div>
+           <LoggerUser />
         </div>
       </nav>
     </header>

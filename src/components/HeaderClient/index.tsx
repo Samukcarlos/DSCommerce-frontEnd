@@ -5,6 +5,7 @@ import iconAdmin from '../../assets/admin.svg';
 import * as authService from '../../services/auth-service';
 import { useContext } from 'react';
 import { ContextToken } from '../../utils/context-token';
+import LoggerUser from '../LoggedUser';
 
 export default function HearderClient(){
 
@@ -32,9 +33,7 @@ export default function HearderClient(){
                 </div>
               </Link>
           </div>
-          <Link to="/login">
-                Entrar
-          </Link>
+              <LoggerUser/>
         </div>
       </nav>
     </header>
