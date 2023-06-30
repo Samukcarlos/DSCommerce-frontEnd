@@ -14,7 +14,7 @@ type QueryParams ={
 
 export default function Catalog(){
 
-  const [isLestPage, setIsLestPage]= useState(false);  // é a ultama página? caso seja botão carregar mais some
+  const [isLastPage, setIsLestPage]= useState(false);  // é a ultama página? caso seja botão carregar mais some
 
   const [products, setProduct]= useState<ProductDTO[]>([]);
 
@@ -57,10 +57,8 @@ export default function Catalog(){
           </div>
 
               {
-                !isLestPage &&
-                <div onClick={handleNextPageClick}>
-                  <ButtonNextPage />
-                </div>
+                !isLastPage &&                
+                  <ButtonNextPage onNextPage={handleNextPageClick}/>               
               }
           
         </section>
