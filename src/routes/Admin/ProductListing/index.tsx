@@ -6,12 +6,18 @@ import { useEffect, useState } from 'react';
 import { ProductDTO } from '../../../models/product'
 import SearchBar from '../../../components/SearchBar';
 import ButtonNextPage from '../../../components/ButtonNextPage';
+import DialogInfo from '../../../components/DialogInfo';
 
 type QueryParams ={
   page: number;
   name: string;
 }
 export default function ProductListing(){
+
+  const [dialogInfoData, setDialogInfoData] = useState({
+    visible: false,
+    message: "Operação com sucesso!!"
+  })
 
   const [isLastPage, setIsLestPage]= useState(false);  // é a ultama página? caso seja botão carregar mais some
 
@@ -40,6 +46,14 @@ function handleSearch(searchText: string){
 
 function handleNextPageClick(){
   setQueryParams({...queryParams, page:queryParams.page + 1}); // CARREGAR MAIS
+}
+
+function hendleDialogInfoClose(){
+  setDialogInfoData({...dialogInfoData, visible:false})
+}
+
+function handleDeletClick(){
+  setDialogInfoData({...dialogInfoData, visible:true})
 }
 
     return(
@@ -74,7 +88,7 @@ function handleNextPageClick(){
                     <td className="dsc-tb768">R$ {product.price.toFixed(2)}</td>
                     <td className="dsc-txt-left">{product.name}</td>
                     <td><img className="dsc-product-listing-btn" src={editIcon} alt="Editar"/></td>
-                    <td><img className="dsc-product-listing-btn" src={deleteIcon} alt="Deletar"/></td>
+                    <td><img onClick={handleDeletClick} className="dsc-product-listing-btn" src={deleteIcon} alt="Deletar"/></td>
                   </tr>
                     ))
                   }             
@@ -87,6 +101,15 @@ function handleNextPageClick(){
               
               }
         </section>
+
+        {
+             dialogInfoData.visible &&
+            <DialogInfo
+                  message={dialogInfoData.message}
+                  onDialogClose={hendleDialogInfoClose}
+            />
+        }
+        
       </main>
     );
 }
