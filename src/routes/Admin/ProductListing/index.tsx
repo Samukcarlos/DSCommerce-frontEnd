@@ -22,6 +22,7 @@ export default function ProductListing(){
 
   const [dialogConfirmationData, setDialogConfirmationData] = useState({
     visible: false,
+    id: 0,
     message: "Tem Certeza"
   })
 
@@ -59,13 +60,25 @@ function hendleDialogInfoClose(){
   setDialogInfoData({...dialogInfoData, visible:false})
 }
 
-function handleDeletClick(){
-  setDialogConfirmationData({...dialogConfirmationData, visible:true})
+function handleDeletClick(productId: number){
+  setDialogConfirmationData({...dialogConfirmationData,id:productId, visible:true})
 }
 
-function hendleDialogConfirmationAnswer(answer: boolean){
-  console.log("Resposta", answer);
-  setDialogConfirmationData({...dialogConfirmationData, visible:false});
+function hendleDialogConfirmationAnswer(answer: boolean, productId: number){
+  if(answer){
+    productService.deletById(productId)
+        .then(()=> {
+          setProduct([]);
+          setQueryParams({...queryParams, page:0});
+        })
+        .catch(error => {
+          setDialogInfoData({
+            visible: true,
+            message: error.response.data.error
+          })
+        })
+  }
+   setDialogConfirmationData({...dialogConfirmationData, visible:false});
 }
 
     return(
@@ -100,7 +113,7 @@ function hendleDialogConfirmationAnswer(answer: boolean){
                     <td className="dsc-tb768">R$ {product.price.toFixed(2)}</td>
                     <td className="dsc-txt-left">{product.name}</td>
                     <td><img className="dsc-product-listing-btn" src={editIcon} alt="Editar"/></td>
-                    <td><img onClick={handleDeletClick} className="dsc-product-listing-btn" src={deleteIcon} alt="Deletar"/></td>
+                    <td><img onClick={()=>handleDeletClick(product.id)} className="dsc-product-listing-btn" src={deleteIcon} alt="Deletar"/></td>
                   </tr>
                     ))
                   }             
@@ -124,6 +137,7 @@ function hendleDialogConfirmationAnswer(answer: boolean){
         {
              dialogConfirmationData.visible &&
             <DialogConfirmation
+                  id={dialogConfirmationData.id}
                   message={dialogConfirmationData.message}
                   onDialogAnswer={hendleDialogConfirmationAnswer}
             />
