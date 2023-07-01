@@ -7,6 +7,7 @@ import { ProductDTO } from '../../../models/product'
 import SearchBar from '../../../components/SearchBar';
 import ButtonNextPage from '../../../components/ButtonNextPage';
 import DialogInfo from '../../../components/DialogInfo';
+import DialogConfirmation from '../../../components/DialogConfirmation';
 
 type QueryParams ={
   page: number;
@@ -18,6 +19,12 @@ export default function ProductListing(){
     visible: false,
     message: "Operação com sucesso!!"
   })
+
+  const [dialogConfirmationData, setDialogConfirmationData] = useState({
+    visible: false,
+    message: "Tem Certeza"
+  })
+
 
   const [isLastPage, setIsLestPage]= useState(false);  // é a ultama página? caso seja botão carregar mais some
 
@@ -53,7 +60,12 @@ function hendleDialogInfoClose(){
 }
 
 function handleDeletClick(){
-  setDialogInfoData({...dialogInfoData, visible:true})
+  setDialogConfirmationData({...dialogConfirmationData, visible:true})
+}
+
+function hendleDialogConfirmationAnswer(answer: boolean){
+  console.log("Resposta", answer);
+  setDialogConfirmationData({...dialogConfirmationData, visible:false});
 }
 
     return(
@@ -109,6 +121,14 @@ function handleDeletClick(){
                   onDialogClose={hendleDialogInfoClose}
             />
         }
+        {
+             dialogConfirmationData.visible &&
+            <DialogConfirmation
+                  message={dialogConfirmationData.message}
+                  onDialogAnswer={hendleDialogConfirmationAnswer}
+            />
+        }
+        
         
       </main>
     );
