@@ -13,7 +13,7 @@ export default function Login(){
   const navigate = useNavigate();
   
   const [formData, setFormData] = useState<any>({
-    username: {
+  username: {
     value: "",
     id: "username",
     name: "username",
@@ -31,7 +31,7 @@ export default function Login(){
     type: "password",
     placeholder: "Senha",
     }
-    })
+    });
 
   function hendleSubmit(event: any){
     event.preventDefault();
@@ -41,7 +41,7 @@ export default function Login(){
         setContextTokenPayload(authService.getAccessTokenPayload());
         navigate("/cart");
       })
-      .catch(error=>{
+      .catch(error=> {
         console.log("Erro no ligin", error);
       })
   }

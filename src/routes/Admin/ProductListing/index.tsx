@@ -8,12 +8,16 @@ import SearchBar from '../../../components/SearchBar';
 import ButtonNextPage from '../../../components/ButtonNextPage';
 import DialogInfo from '../../../components/DialogInfo';
 import DialogConfirmation from '../../../components/DialogConfirmation';
+import ButtonInverse from '../../../components/ButtonPrimary';
+import { useNavigate } from 'react-router-dom';
 
 type QueryParams ={
   page: number;
   name: string;
 }
 export default function ProductListing(){
+
+  const navigate = useNavigate();
 
   const [dialogInfoData, setDialogInfoData] = useState({
     visible: false,
@@ -45,6 +49,10 @@ export default function ProductListing(){
       });
 
 }, [queryParams]); // mudando o status/valor a função é executada (productService)
+
+function hendleNewProductClick(){
+ navigate("/admin/products/create");
+}
 
 function handleSearch(searchText: string){
   setProduct([]);
@@ -87,7 +95,9 @@ function hendleDialogConfirmationAnswer(answer: boolean, productId: number){
           <h2 className="dsc-section-title dsc-mb20">Cadastro de produtos</h2>
   
           <div className="dsc-btn-page-container dsc-mb20">
-            <div className="dsc-btn dsc-btn-white">Novo</div>
+            <div onClick={hendleNewProductClick}>
+                  <ButtonInverse text='Novo'/>
+            </div>           
           </div>
   
          <SearchBar onSearch={handleSearch} />
