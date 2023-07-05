@@ -19,6 +19,10 @@ export default function ProductForm(){
             name: "name",
             type: "text",
             placeholder: "Nome",
+            validation: function(value: string){
+                  return value.length >=3 && value.length <=80;
+            },
+            message: "Favor informar um nome válido"
           },
     price: {
             value: "",
