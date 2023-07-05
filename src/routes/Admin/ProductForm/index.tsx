@@ -43,14 +43,17 @@ export default function ProductForm(){
   useEffect(()=> {
     if (isEditing){
         productService.findById(Number(params.productId))
-            .then(response => {                  
-                  setFormData(forms.updateAll(formData, response.data));
+            .then(response => {  
+                  const newFormData = formData.updateAll(formData, response.data);                
+                  setFormData(newFormData);
             })
     }
   },[]);
 
 function handleInputChange(event:any){
-  setFormData (forms.update(formData, event.target.name, event.target.value));
+  const dataUpdated= forms.update(formData, event.target.name, event.target.value);
+  const dataValidate= forms.validate(dataUpdated, event.target.name);
+  setFormData (dataValidate);
 }
 
     return(
@@ -66,6 +69,7 @@ function handleInputChange(event:any){
                       className="dsc-form-control"
                       onChange={handleInputChange}
                   />
+                  <div className='dsc-form-error'>{formData.name.message}</div>
               </div>
               <div>
                   <FormInput
@@ -73,6 +77,7 @@ function handleInputChange(event:any){
                       className="dsc-form-control"
                       onChange={handleInputChange}
                   />
+                  <div className='dsc-form-error'>{formData.price.message}</div>
               </div>
               <div>
                   <FormInput
