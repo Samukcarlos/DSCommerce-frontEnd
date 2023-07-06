@@ -104,11 +104,21 @@ function handleTurnyDirty(name: string){
         setFormData(newFormData);
 }
 
+    function handleSubmit(event:any){
+      event.preventDefault();
+
+      const formDataValidation = forms.dirtyAndValidationAll(formData); 
+      if(forms.hasAnyInvalid(formDataValidation)){
+        setFormData(formDataValidation);
+        return;
+      }
+    }
+
     return(
         <main>
       <section id="product-form-section" className="dsc-container">
         <div className="dsc-product-form-container">
-          <form className="dsc-card dsc-form">
+          <form className="dsc-card dsc-form" onSubmit={handleSubmit}>
             <h2>Dados do produto</h2>
             <div className="dsc-form-controls-container">
               <div>
