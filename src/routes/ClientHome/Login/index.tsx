@@ -11,6 +11,8 @@ export default function Login(){
   const {setContextTokenPayload} = useContext(ContextToken);
 
   const navigate = useNavigate();
+
+  const [submitResponseFail, setSubmitResponseFail] = useState(false);
   
   const [formData, setFormData] = useState<any>({
   username: {
@@ -41,8 +43,8 @@ export default function Login(){
         setContextTokenPayload(authService.getAccessTokenPayload());
         navigate("/cart");
       })
-      .catch(error=> {
-        console.log("Erro no ligin", error);
+      .catch(()=> {
+        setSubmitResponseFail(true);
       })
   }
 
@@ -82,6 +84,13 @@ export default function Login(){
                 />
               </div>
             </div>
+
+              {
+                    submitResponseFail &&
+                <div className='dsc-form-global-error'>
+                    Usuário ou senha inválidos
+                </div>
+             }
             <div className="dsc-login-form-buttons dsc-mt20">
               <button type="submit" className="dsc-btn dsc-btn-blue">Entrar</button>
             </div>
