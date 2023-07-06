@@ -8,6 +8,7 @@ import * as categoryService from '../../../services/category-service';
 import FormTextArea from '../../../components/FormTextArea';
 import { CategoryDTO } from '../../../models/category';
 import FormSelect from '../../../components/FormSelect';
+import { selectStyles } from '../../../utils/select';
 
 export default function ProductForm(){
 
@@ -131,7 +132,7 @@ function handleTurnyDirty(name: string){
               <div>
                   <FormInput
                       {...formData.imgUrl}
-                      className="dsc-form-control"
+                      className="dsc-form-control"                      
                       onTurnDirty={handleTurnyDirty}
                       onChange={handleInputChange}
                   />
@@ -139,7 +140,8 @@ function handleTurnyDirty(name: string){
                   <div>
                     <FormSelect
                         {...formData.categories}
-                        className="dsc-form-control"
+                        styles={selectStyles}
+                        className="dsc-form-control des-form-select-container"
                         options= {categories}
                         onChange={(obj: any) => {
                           const newFormData = forms.update(formData, "categories", obj);
