@@ -128,6 +128,11 @@ function handleTurnyDirty(name: string){
           .then(() => {
             navigate("/admin/products");
           })
+          .catch(error => {
+            const newInputs = forms.setBackendErrors(FormData, error.response.data.errors);
+            setFormData(newInputs);
+          });
+          
 
       //const requestBody = forms.toValues(formData);
 
